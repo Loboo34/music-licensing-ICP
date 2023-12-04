@@ -1,0 +1,30 @@
+{
+  "canisters": {
+    "music_licensing_backend": {
+      "candid": "src/music_licensing_backend/music_licensing_backend.did",
+      "package": "music_licensing_backend",
+      "type": "rust"
+    },
+    "music_licensing_frontend": {
+      "dependencies": [
+        "music_licensing_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/music_licensing_frontend/src/index.html"
+      },
+      "source": [
+        "src/music_licensing_frontend/assets",
+        "dist/music_licensing_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

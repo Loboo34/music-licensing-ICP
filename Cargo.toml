@@ -1,0 +1,4 @@
+[workspace]
+members = [
+    "src/music_licensing_backend",
+]
