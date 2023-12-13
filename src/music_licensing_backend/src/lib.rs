@@ -130,6 +130,7 @@ thread_local! {
             .expect("Cannot create a counter")
     );
 
+    // Define storage variables for different data structures
     static SONG_STORAGE: RefCell<StableBTreeMap<u64, Song, Memory>> =
         RefCell::new(StableBTreeMap::init(
             MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(1)))
