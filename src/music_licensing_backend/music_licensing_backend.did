@@ -1,8 +1,4 @@
-type Approvepayload = record {
-  auth_key : text;
-  cost : nat32;
-  license_id : nat64;
-};
+type Approvepayload = record { cost : nat32; license_id : nat64 };
 type Error = variant {
   AlreadyApproved : record { msg : text };
   InvalidPayload : record { msg : text };
@@ -33,14 +29,14 @@ type Licensee = record {
 type LicenseePayload = record { name : text; email : text };
 type Owner = record {
   id : nat64;
-  auth_key : text;
   song_ids : vec nat64;
   name : text;
   email : text;
   license_ids : vec nat64;
+  owner_principal : text;
 };
-type OwnerPayload = record { auth_key : text; name : text; email : text };
-type ProtectedPayload = record { auth_key : text; license_id : nat64 };
+type OwnerPayload = record { name : text; email : text };
+type ProtectedPayload = record { license_id : nat64 };
 type Result = variant { Ok : License; Err : Error };
 type Result_1 = variant { Ok : Licensee; Err : Error };
 type Result_2 = variant { Ok : Owner; Err : Error };
@@ -48,7 +44,12 @@ type Result_3 = variant { Ok : Song; Err : Error };
 type Result_4 = variant { Ok : vec Song; Err : Error };
 type Result_5 = variant { Ok : vec License; Err : Error };
 type Result_6 = variant { Ok : ReturnOwner; Err : Error };
-type ReturnOwner = record { id : nat64; name : text; email : text };
+type ReturnOwner = record {
+  id : nat64;
+  name : text;
+  email : text;
+  owner_principal : text;
+};
 type Song = record {
   id : nat64;
   title : text;
@@ -69,7 +70,6 @@ type SongPayload = record {
 type UpdateSongPayload = record {
   id : nat64;
   title : text;
-  auth_key : text;
   year : nat32;
   genre : text;
   artist : text;
@@ -81,7 +81,7 @@ service : {
   create_licensee : (LicenseePayload) -> (Result_1);
   create_owner : (OwnerPayload) -> (Result_2);
   create_song : (SongPayload) -> (Result_3);
-  delete_song : (text, nat64) -> (Result_3);
+  delete_song : (nat64) -> (Result_3);
   get_all_songs : () -> (Result_4) query;
   get_license : (nat64) -> (Result) query;
   get_licensee : (nat64) -> (Result_1) query;
